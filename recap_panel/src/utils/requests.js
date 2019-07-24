@@ -11,7 +11,7 @@ class Requests {
         }
         axios.get('/dls/api?'+str)
             .then((response) => {
-                successCallback(response;
+                successCallback(response);
             })
             .catch((error) => {
                 errorCallback(error);
