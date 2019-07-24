@@ -11,11 +11,9 @@ class Requests {
         }
         axios.get('/dls/api?'+str)
             .then((response) => {
-                console.log("response", response);
-                successCallback(response);
+                successCallback(response;
             })
             .catch((error) => {
-                console.log(error);
                 errorCallback(error);
             });
     }
