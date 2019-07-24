@@ -6,7 +6,8 @@ import Requests from '../../utils/requests'
 import usersData from './UsersData'
 
 function UserRow(props) {
-  const user = props.user
+  var user = props.user
+  user.id = props.key;
   const userLink = `/users/${user.id}`
 
   const getBadge = (user) => {
@@ -36,21 +37,15 @@ class Users extends Component {
     super(props);
 
     this.state = {};
-    this.state.loading = true;
-    this.state.usersList = [];
-
+    
     Requests.dlsApiGet({method:'api.game.listUsers'},function(response){
-      console.log(response.data.users);
-      this.setState({loading:false, usersList: response.data.users});
+      this.setState({usersList: response.data.users});
     },function(error){
 
     });
   }
 
   render() {
-
-    const userList = this.state.usersList.filter((user) => user.id < 10)
-
     return (
       <div className="animated fadeIn">
         <Row>
@@ -69,9 +64,11 @@ class Users extends Component {
                     </tr>
                   </thead>
                   <tbody>
-                    {this.state.loading ? 'Loading...' : userList.map((user, index) =>
-                      <UserRow key={index} user={user}/>
-                    )}
+                    {this.state.usersList === undefined ? 'Loading...' : 
+                      this.state.usersList.map((user, index) =>
+                        <UserRow key={index} user={user}/>
+                      )
+                    }
                   </tbody>
                 </Table>
               </CardBody>
