@@ -9,21 +9,23 @@ function UserRow(props) {
   const user = props.user
   const userLink = `/users/${user.id}`
 
-  const getBadge = (status) => {
-    return status === 'Active' ? 'success' :
-      status === 'Inactive' ? 'secondary' :
-        status === 'Pending' ? 'warning' :
-          status === 'Banned' ? 'danger' :
-            'primary'
+  const getBadge = (user) => {
+    // return status === 'Active' ? 'success' :
+    //   status === 'Inactive' ? 'secondary' :
+    //     status === 'Pending' ? 'warning' :
+    //       status === 'Banned' ? 'danger' :
+    //         'primary'
+    return user.logged ? 'success' : 'primary';
+  }
+  const getStatus = (user) => {
+    return user.logged ? 'Logged' : '';
   }
 
   return (
     <tr key={user.id.toString()}>
       <th scope="row"><Link to={userLink}>{user.id}</Link></th>
-      <td><Link to={userLink}>{user.name}</Link></td>
-      <td>{user.registered}</td>
-      <td>{user.role}</td>
-      <td><Link to={userLink}><Badge color={getBadge(user.status)}>{user.status}</Badge></Link></td>
+      <td><Link to={userLink}>{user.email}</Link></td>
+      <td><Link to={userLink}><Badge color={getBadge(user)}>{getStatus(user)}</Badge></Link></td>
     </tr>
   )
 }
@@ -38,6 +40,7 @@ class Users extends Component {
     this.state.usersList = [];
 
     Requests.dlsApiGet({method:'api.game.listUsers'},function(response){
+      console.log(response.data.users);
       this.setState({loading:false, usersList: response.data.users});
     },function(error){
 
@@ -62,8 +65,6 @@ class Users extends Component {
                     <tr>
                       <th scope="col">id</th>
                       <th scope="col">name</th>
-                      <th scope="col">registered</th>
-                      <th scope="col">role</th>
                       <th scope="col">status</th>
                     </tr>
                   </thead>
