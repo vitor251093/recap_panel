@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { Badge, Card, CardBody, CardHeader, Col, Row, Table } from 'reactstrap';
+import Requests from '../../utils/requests'
 
 import usersData from './UsersData'
 
@@ -29,9 +30,23 @@ function UserRow(props) {
 
 class Users extends Component {
 
+  constructor(props) {
+    super(props);
+
+    this.state = {};
+    this.state.loading = true;
+    this.state.usersList = [];
+
+    Requests.dlsApiGet({method:'api.game.listUsers'},function(response){
+      //this.setState({usersList: });
+    },function(error){
+
+    });
+  }
+
   render() {
 
-    const userList = usersData.filter((user) => user.id < 10)
+    const userList = this.state.usersList.filter((user) => user.id < 10)
 
     return (
       <div className="animated fadeIn">
@@ -39,7 +54,7 @@ class Users extends Component {
           <Col xl={6}>
             <Card>
               <CardHeader>
-                <i className="fa fa-align-justify"></i> Users <small className="text-muted">example</small>
+                <i className="fa fa-align-justify"></i> Users
               </CardHeader>
               <CardBody>
                 <Table responsive hover>
@@ -53,7 +68,7 @@ class Users extends Component {
                     </tr>
                   </thead>
                   <tbody>
-                    {userList.map((user, index) =>
+                    {this.state.loading ? 'Loading...' : userList.map((user, index) =>
                       <UserRow key={index} user={user}/>
                     )}
                   </tbody>
