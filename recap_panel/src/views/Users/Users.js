@@ -38,8 +38,9 @@ class Users extends Component {
 
     this.state = {};
     
+    var that = this;
     Requests.dlsApiGet({method:'api.game.listUsers'},function(response){
-      this.setState({usersList: response.data.users});
+      that.setState({usersList: response.data.users});
     },function(error){
 
     });
