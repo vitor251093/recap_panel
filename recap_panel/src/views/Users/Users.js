@@ -6,9 +6,8 @@ import Requests from '../../utils/requests'
 import usersData from './UsersData'
 
 function UserRow(props) {
-  var user = props.user
-  user.id = props.key;
-  const userLink = `/users/${user.id}`
+  const user = props.user
+  const userLink = `/users/${user.email}`
 
   const getBadge = (user) => {
     // return status === 'Active' ? 'success' :
@@ -23,9 +22,8 @@ function UserRow(props) {
   }
 
   return (
-    <tr key={user.id.toString()}>
-      <th scope="row"><Link to={userLink}>{user.id}</Link></th>
-      <td><Link to={userLink}>{user.email}</Link></td>
+    <tr key={user.email}>
+      <th scope="row"><Link to={userLink}>{user.email}</Link></th>
       <td><Link to={userLink}><Badge color={getBadge(user)}>{getStatus(user)}</Badge></Link></td>
     </tr>
   )
@@ -59,8 +57,7 @@ class Users extends Component {
                 <Table responsive hover>
                   <thead>
                     <tr>
-                      <th scope="col">id</th>
-                      <th scope="col">name</th>
+                      <th scope="col">email</th>
                       <th scope="col">status</th>
                     </tr>
                   </thead>
