@@ -1,37 +1,40 @@
 import React, { Component } from 'react';
 import { Card, CardBody, CardHeader, Col, Row, Table } from 'reactstrap';
-
-import usersData from './UsersData'
+import Requests from '../../utils/requests'
 
 class User extends Component {
 
+  constructor(props) {
+    super(props);
+
+    const userMail = props.match.params.id;
+    this.state = {};
+    
+    var that = this;
+    Requests.dlsApiGet({method:'api.game.getUserInfo', mail:userMail},function(response){
+      that.setState({user: response.data.user});
+    },function(error){
+
+    });
+  }
+
   render() {
-
-    const user = usersData.find( user => user.id.toString() === this.props.match.params.id)
-
-    const userDetails = user ? Object.entries(user) : [['id', (<span><i className="text-muted icon-ban"></i> Not found</span>)]]
-
-    return (
+    var user = this.state.user;
+    return (user === undefined ? 'Loading...' :
       <div className="animated fadeIn">
         <Row>
           <Col lg={6}>
             <Card>
               <CardHeader>
-                <strong><i className="icon-info pr-1"></i>User id: {this.props.match.params.id}</strong>
+                <strong><i className="icon-info pr-1"></i>User mail: {user.email}</strong>
               </CardHeader>
               <CardBody>
                   <Table responsive striped hover>
                     <tbody>
-                      {
-                        userDetails.map(([key, value]) => {
-                          return (
-                            <tr key={key}>
-                              <td>{`${key}:`}</td>
-                              <td><strong>{value}</strong></td>
-                            </tr>
-                          )
-                        })
-                      }
+                      <tr>
+                        <td>Name:</td>
+                        <td><strong>{user.name}</strong></td>
+                      </tr>
                     </tbody>
                   </Table>
               </CardBody>

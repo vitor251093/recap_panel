@@ -3,8 +3,6 @@ import { Link } from 'react-router-dom';
 import { Badge, Card, CardBody, CardHeader, Col, Row, Table } from 'reactstrap';
 import Requests from '../../utils/requests'
 
-import usersData from './UsersData'
-
 function UserRow(props) {
   const user = props.user
   const userLink = `/users/${user.email}`
