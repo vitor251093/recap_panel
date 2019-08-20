@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 class Requests {
-    static dlsApiGet(params, successCallback, errorCallback) {
+    static objectToGetParams(params) {
         var str = "";
         for (var key in params) {
             if (str !== "") {
@@ -9,7 +9,22 @@ class Requests {
             }
             str += key + "=" + encodeURIComponent(params[key]);
         }
-        axios.get('/dls/api?'+str)
+        return str;
+    }
+    static dlsApiGet(method, params, successCallback, errorCallback) {
+        var str = Requests.objectToGetParams(params);
+        axios.get('/dls/api?method='+method+'&'+str)
+            .then((response) => {
+                successCallback(response);
+            })
+            .catch((error) => {
+                errorCallback(error);
+            });
+    }
+
+    static dlsApiPost(method, getParams, postParams, successCallback, errorCallback) {
+        var str = Requests.objectToGetParams(getParams);
+        axios.post('/dls/api?method='+method+'&'+str, postParams)
             .then((response) => {
                 successCallback(response);
             })
