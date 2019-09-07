@@ -26,10 +26,10 @@ class User extends Component {
 
   startTesting() {
     var parts = [];
-    for (var i = 1; i < 1573; i++) {
+    for (var i = 1; i <= 1573; i++) {
       parts.push({cost:1,level:5,market_status:1,rarity:1,status:1,usage:1,rigblock_asset_id:i});
     }
-    for (var i = 10001; i < 10835; i++) {
+    for (var i = 10001; i <= 10835; i++) {
       parts.push({cost:1,level:5,market_status:1,rarity:1,status:1,usage:1,rigblock_asset_id:i});
     } 
     var creatures = [];
@@ -54,11 +54,11 @@ class User extends Component {
                         1850310379, 117394854,  1476711747, 3380544995, 758141691,
                         1240682488, 577654149,  3707839109, 3795238812, 507464763
                       ];
-    for (var i = 0; i < 100; i++) {
+    for (var i = 0; i < creaturesIds.length; i++) {
       creatures.push({id:(i+1), gear_score:100, item_points:0, noun_id:creaturesIds[i]});
     }
     
-    this.applyChanges({account:{tutorial_completed:false, chain_progression:1, creature_rewards:100, 
+    this.applyChanges({account:{tutorial_completed:false, chain_progression:24, creature_rewards:100, 
                                 current_game_id:1, current_playgroup_id:1, default_deck_pve_id:1, 
                                 default_deck_pvp_id:1, level:100, avatar_id:11, dna:10000000, 
                                 new_player_inventory:1, new_player_progress:9500, cashout_bonus_time:1, 
